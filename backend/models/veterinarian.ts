@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 import generateId from "../helpers/generateID.ts";
 
 const { Schema } = mongoose;
@@ -21,12 +22,12 @@ const veterinarianSchema = new Schema({
   },
   telefono: {
     type: String,
-    default: null,
     trim: true,
+    default: null,
   },
   web: {
     type: String,
-    default: true,
+    default: null,
   },
   token: {
     type: String,
@@ -39,5 +40,17 @@ const veterinarianSchema = new Schema({
   },
 });
 
-const Veterinario = mongoose.model('Veterinario', veterinarianSchema)
+veterinarianSchema.pre("save", async function (next) {
+  // if password is hashed continue.
+  if (!this.isModified("password")) return next();
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(this.password, salt);
+    this.password = hash;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+const Veterinario = mongoose.model("Veterinario", veterinarianSchema);
 export default Veterinario;
