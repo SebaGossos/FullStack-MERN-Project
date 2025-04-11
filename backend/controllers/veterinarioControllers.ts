@@ -36,10 +36,16 @@ export const confirm = async (req, res) => {
   try {
     userConfirm.token = null;
     userConfirm.confirmado = true;
-    await userConfirm.save()
-    
+    await userConfirm.save();
+
     res.json({ msg: "User Confirm Correctly" });
   } catch (error) {
-    console.log( error )
+    console.log(error);
   }
+};
+
+export const authenticate = async (req, res) => {
+  
+
+  res.json({msg: 'autenticando'})
 };
