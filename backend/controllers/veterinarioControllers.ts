@@ -1,4 +1,4 @@
-import Veterinario from "../models/veterinarian.ts";
+import Veterinario from "../models/Veterinarian.ts";
 export const register = async (req, res) => {
   const { email } = req.body;
 
@@ -45,7 +45,7 @@ export const confirm = async (req, res) => {
 };
 
 export const authenticate = async (req, res) => {
-  const { email } = req.body;
+  const { email, password:passwordForm } = req.body;
 
   // check if user exist
   const user = await Veterinario.findOne({ email });
@@ -59,6 +59,13 @@ export const authenticate = async (req, res) => {
     const error = new Error("User does not confirm");
     return res.status(403).json({ msg: error.message });
   }
-  // authenticate user
+  // Check user
+  if( await user.checkPassword(passwordForm) ){
+    res.json('password correctly')
+  } else {
+    const error = new Error("Incorrect Password");
+    return res.status(403).json({ msg: error.message });
+  }
+
 
 };

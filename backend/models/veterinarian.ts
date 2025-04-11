@@ -52,5 +52,9 @@ veterinarianSchema.pre("save", async function (next) {
   }
 });
 
+veterinarianSchema.methods.checkPassword = async function (passwordForm) {
+  return await bcrypt.compare(passwordForm, this.password);
+};
+
 const Veterinario = mongoose.model("Veterinario", veterinarianSchema);
 export default Veterinario;
