@@ -45,7 +45,20 @@ export const confirm = async (req, res) => {
 };
 
 export const authenticate = async (req, res) => {
-  
+  const { email } = req.body;
 
-  res.json({msg: 'autenticando'})
+  // check if user exist
+  const user = await Veterinario.findOne({ email });
+  if (!user) {
+    const error = new Error("User does not exist ");
+    return res.status(403).json({ msg: error.message });
+  }
+  
+  // check if user is confirm or not
+  if( !user.confirmado ) {
+    const error = new Error("User does not confirm");
+    return res.status(403).json({ msg: error.message });
+  }
+  // authenticate user
+
 };
