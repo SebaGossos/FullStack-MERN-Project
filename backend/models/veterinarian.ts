@@ -27,7 +27,11 @@ const veterinarianSchema = new Schema({
     type: String,
     default: true,
   },
-  token: {},
+  token: {
+    type: String,
+    default: Date.now(),
+    unique: true
+  },
   confirmado: {
     type: Boolean,
     default: false,
