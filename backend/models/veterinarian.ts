@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import generateId from "../helpers/generateID.ts";
 
 const { Schema } = mongoose;
 
@@ -29,8 +30,8 @@ const veterinarianSchema = new Schema({
   },
   token: {
     type: String,
-    default: Date.now(),
-    unique: true
+    unique: true,
+    default: generateId(),
   },
   confirmado: {
     type: Boolean,

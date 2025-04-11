@@ -16,6 +16,7 @@ export const register = async (req, res) => {
 
     res.json(veterinarioGuardado);
   } catch (error) {
+    console.log(333333333333333333333333333333333333333333)
     console.log(error);
   }
 };
