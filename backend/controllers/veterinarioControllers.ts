@@ -1,6 +1,13 @@
 import Veterinario from "../models/veterinarian.ts";
-export const register = async(req, res) => {
-  // const { email, password, nombre } = req.body;
+export const register = async (req, res) => {
+  const { email } = req.body;
+
+  // prevent indentifed user
+  const existUser = await Veterinario.findOne({ email });
+  if( existUser ) {
+    const error = new Error('User has alredy been registered')
+    return res.status(400).json({ msg: error.message })
+  }
 
   try {
     // Save new veterinarian
@@ -9,9 +16,8 @@ export const register = async(req, res) => {
 
     res.json(veterinarioGuardado);
   } catch (error) {
-    console.log( error )
+    console.log(error);
   }
-
 };
 
 export const profil = (req, res) => {
