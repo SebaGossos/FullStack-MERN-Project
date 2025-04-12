@@ -1,4 +1,3 @@
-import { password } from "bun";
 import jwt from "jsonwebtoken";
 import Veterinario from "../models/Veterinarian.ts";
 
