@@ -10,12 +10,13 @@
   },
   "private": true,
   "scripts": {
-    "dev": "index.js"
+    "dev": "index.ts"
   },
   "type": "module",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2"
   }
 }

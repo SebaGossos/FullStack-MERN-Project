@@ -1,4 +1,5 @@
 import Veterinario from "../models/Veterinarian.ts";
+import generateJWT from "../helpers/generateJWT.ts";
 export const register = async (req, res) => {
   const { email } = req.body;
 
@@ -45,7 +46,7 @@ export const confirm = async (req, res) => {
 };
 
 export const authenticate = async (req, res) => {
-  const { email, password:passwordForm } = req.body;
+  const { email, password: passwordForm } = req.body;
 
   // check if user exist
   const user = await Veterinario.findOne({ email });
@@ -53,19 +54,19 @@ export const authenticate = async (req, res) => {
     const error = new Error("User does not exist ");
     return res.status(403).json({ msg: error.message });
   }
-  
+
   // check if user is confirm or not
-  if( !user.confirmado ) {
+  if (!user.confirmado) {
     const error = new Error("User does not confirm");
     return res.status(403).json({ msg: error.message });
   }
   // Check user
-  if( await user.checkPassword(passwordForm) ){
-    res.json('password correctly')
+  if (await user.checkPassword(passwordForm)) {
+
+    res.json({token: generateJWT(user.id)});
+
   } else {
     const error = new Error("Incorrect Password");
     return res.status(403).json({ msg: error.message });
   }
-
-
 };
