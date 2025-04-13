@@ -1,5 +1,6 @@
 import Veterinario from "../models/Veterinarian.ts";
 import generateJWT from "../helpers/generateJWT.ts";
+import generateId from "../helpers/generateID.ts";
 export const register = async (req, res) => {
   const { email } = req.body;
 
@@ -69,3 +70,26 @@ export const authenticate = async (req, res) => {
     return res.status(403).json({ msg: error.message });
   }
 };
+
+export const forgetPassword = async (req, res) => {
+  const { email } = req.body;
+
+  const existeVeterinario = await Veterinario.findOne({ email });
+
+  if (!existeVeterinario) {
+    const error = new Error("El usuario no existe");
+    return res.status(400).json({ msg: error.message });
+  }
+
+  try{
+    existeVeterinario.token = generateId();
+    await existeVeterinario.save()
+    return res.json({msg: 'Hemos enviado un email'})
+  } catch (error) {
+    console.log( error )
+  }
+};
+
+export const checkToken = async (req, res) => {};
+
+export const newPassword = async (req, res) => {};
