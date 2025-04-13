@@ -4,6 +4,7 @@ import Veterinario from "../models/Veterinarian.ts";
 const checkAuth = async (req, res, next) => {
   const tokenWithBearer: String = req.headers.authorization;
   let token: String;
+
   if (tokenWithBearer && tokenWithBearer.startsWith("Bearer")) {
     try {
       token = tokenWithBearer.split(" ")[1];
@@ -19,12 +20,11 @@ const checkAuth = async (req, res, next) => {
     }
   }
   if(!token) {
-
       const err = new Error("Invalid or not-existent token");
-      res.status(403).json({ msg: err.message });
+      return res.status(403).json({ msg: err.message });
   }
 
-  next();
+  return next();
 };
 
 export default checkAuth;
