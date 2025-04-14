@@ -1,7 +1,9 @@
 import express from "express";
 import { addPaciente, getPaciente } from "../controllers/pacienteControllers.ts";
-const router = express.Router()
+import checkAuth from "../middleware/authMiddleware.ts";
 
-router.route('/').get(getPaciente).post(addPaciente)
+const router = express.Router();
+
+router.route("/").post(checkAuth, addPaciente).get(getPaciente);
 
 export default router;

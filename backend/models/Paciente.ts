@@ -13,10 +13,12 @@ const pacienteSchemma = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true
     },
     fecha: {
       type: Date,
       required: true,
+      default: Date.now()
     },
     sintomas: {
       type: String,
