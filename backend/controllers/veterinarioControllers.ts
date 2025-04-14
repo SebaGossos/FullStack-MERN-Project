@@ -93,13 +93,30 @@ export const forgetPassword = async (req, res) => {
 export const checkToken = async (req, res) => {
   const { token } = req.params;
   const checkToken = await Veterinario.findOne({ token });
-  if (checkToken) {
-    // token is valid user exist
-    res.json({msg: 'Valid Token, user exist'})
-  } else {
+  if (!checkToken) {
     const error = new Error("Invalid Token");
-    res.status(400).json({ msg: error.message });
+    return res.status(400).json({ msg: error.message });
   }
+  // token is valid user exist
+  res.json({ msg: "Valid Token, user exist" });
 };
 
-export const newPassword = async (req, res) => {};
+export const newPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+  
+  const veterinario = await Veterinario.findOne({ token });
+  if(!veterinario) {
+    const error = new Error('There was a mistake')
+    return res.status(400).json({ msg: error.message });
+  }
+
+  try {
+    veterinario.token = null;
+    veterinario.password = password;
+    await veterinario.save();
+    res.json({msg: 'password changed successfully'})
+  } catch (error) {
+    console.log(error )
+  }
+};
