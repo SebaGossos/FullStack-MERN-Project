@@ -81,15 +81,25 @@ export const forgetPassword = async (req, res) => {
     return res.status(400).json({ msg: error.message });
   }
 
-  try{
+  try {
     existeVeterinario.token = generateId();
-    await existeVeterinario.save()
-    return res.json({msg: 'Hemos enviado un email'})
+    await existeVeterinario.save();
+    return res.json({ msg: "Hemos enviado un email" });
   } catch (error) {
-    console.log( error )
+    console.log(error);
   }
 };
 
-export const checkToken = async (req, res) => {};
+export const checkToken = async (req, res) => {
+  const { token } = req.params;
+  const checkToken = await Veterinario.findOne({ token });
+  if (checkToken) {
+    // token is valid user exist
+    res.json({msg: 'Valid Token, user exist'})
+  } else {
+    const error = new Error("Invalid Token");
+    res.status(400).json({ msg: error.message });
+  }
+};
 
 export const newPassword = async (req, res) => {};

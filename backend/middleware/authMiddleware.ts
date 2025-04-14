@@ -12,16 +12,16 @@ const checkAuth = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       req.veterinario = await Veterinario.findById(decoded.id).select("-password -token -confirmado");
-      
+
       return next();
     } catch (error) {
       const err = new Error("Invalid token");
       return res.status(403).json({ msg: err.message });
     }
   }
-  if(!token) {
-      const err = new Error("Invalid or not-existent token");
-      return res.status(403).json({ msg: err.message });
+  if (!token) {
+    const err = new Error("Invalid or not-existent token");
+    return res.status(403).json({ msg: err.message });
   }
 
   return next();
