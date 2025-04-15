@@ -29,7 +29,7 @@ export const profil = (req, res) => {
 
 export const confirm = async (req, res) => {
   const { token } = req.params;
-
+  
   const userConfirm = await Veterinario.findOne({ token });
 
   if (!userConfirm) {
@@ -37,15 +37,15 @@ export const confirm = async (req, res) => {
     return res.status(404).json({ msg: error.message });
   }
   try {
-    userConfirm.token = null;
+    userConfirm.token = undefined;
     userConfirm.confirmado = true;
-    await userConfirm.save();
+    await userConfirm.save(); 
 
-    res.json({ msg: "User Confirm Correctly" });
+    return res.json({ msg: "User Confirm Correctly" });
   } catch (error) {
     console.log(error);
   }
-};
+}; 
 
 export const authenticate = async (req, res) => {
   const { email, password: passwordForm } = req.body;

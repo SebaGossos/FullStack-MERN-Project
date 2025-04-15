@@ -31,8 +31,9 @@ const veterinarianSchema = new Schema({
   },
   token: {
     type: String,
+    sparse: true,
     unique: true,
-    default: generateId(),
+    default: generateId,
   },
   confirmado: {
     type: Boolean,

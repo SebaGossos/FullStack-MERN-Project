@@ -14,4 +14,8 @@ export const addPaciente = async (req, res) => {
   }
 };
 
-export const getPaciente = (req, res) => {};
+export const getPaciente = async(req, res) => {
+  const pacientes = await Paciente.find().where('veterinario').equals(req.veterinario);
+
+  res.json(pacientes)
+};
