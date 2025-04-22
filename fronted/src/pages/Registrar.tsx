@@ -1,5 +1,11 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 const Registrar = () => {
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+
   return (
     <>
       <div>
@@ -13,28 +19,28 @@ const Registrar = () => {
             <label className="uppercase text-gray-600 block text-xl font-bold" htmlFor="">
               Nombre
             </label>
-            <input type="email" placeholder="Tu nombre" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" />
+            <input type="email" placeholder="Tu nombre" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" value={nombre} onChange={ e => setNombre(e.target.value)} />
           </div>
 
           <div className="my-5">
-            <label className="uppercase text-gray-600 block text-xl font-bold" htmlFor="">
+            <label className="uppercase text-gray-600 block text-xl font-bold" htmlFor="" >
               Email
             </label>
-            <input type="email" placeholder="Email de Registro" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" />
+            <input type="email" placeholder="Email de Registro" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" value={email} onChange={ e => setEmail(e.target.value)}/>
           </div>
 
           <div className="my-5">
             <label className="uppercase text-gray-600 block text-xl font-bold" htmlFor="">
               Password
             </label>
-            <input type="password" placeholder="Tu password" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" />
+            <input type="password" placeholder="Tu password" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" value={password} onChange={ e => setPassword(e.target.value)}/>
           </div>
 
           <div className="my-5">
             <label className="uppercase text-gray-600 block text-xl font-bold" htmlFor="">
               Repetir Password
             </label>
-            <input type="password" placeholder="Repite tu password" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" />
+            <input type="password" placeholder="Repite tu password" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"  value={password2} onChange={ e => setPassword2(e.target.value)}/>
           </div>
 
           <input type="submit" value="Crear Cuenta" className="bg-indigo-700 w-full py-3 px-10 rounded-xl text-white uppercase font-bold mt-5 hover:cursor-pointer hover:bg-indigo-800 md:w-auto " />
