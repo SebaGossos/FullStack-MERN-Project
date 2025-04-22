@@ -37,14 +37,14 @@ const Registrar = () => {
             <input type="password" placeholder="Repite tu password" className="border w-full p-3 mt-3 bg-gray-50 rounded-xl" />
           </div>
 
-          <input type="submit" value="Iniciar Sesión" className="bg-indigo-700 w-full py-3 px-10 rounded-xl text-white uppercase font-bold mt-5 hover:cursor-pointer hover:bg-indigo-800 md:w-auto " />
+          <input type="submit" value="Crear Cuenta" className="bg-indigo-700 w-full py-3 px-10 rounded-xl text-white uppercase font-bold mt-5 hover:cursor-pointer hover:bg-indigo-800 md:w-auto " />
         </form>
 
         <nav className="mt-10 md:flex justify-between">
           <Link className="block text-center my-5 text-gray-500" to="/">
             Inicia Sesión
           </Link>
-          <Link className="block text-center my-5 text-gray-500" to="/registrar">
+          <Link className="block text-center my-5 text-gray-500" to="/olvide-password">
             Olvide Mi Password
           </Link>
         </nav>
