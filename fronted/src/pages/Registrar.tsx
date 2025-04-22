@@ -1,26 +1,34 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Alerta from "../components/Alerta.tsx";
+
+interface AlertaType {
+  msg: string;
+  error?: boolean;
+}
+
 const Registrar = () => {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [alerta, setAlerta] = useState<AlertaType | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if ([nombre, email, password, password2].includes("")) {
-      console.log("Hay al menos un campo vacío");
+      setAlerta({ msg: "Todos los campos son obligatorios", error: true });
       return;
     }
     if (password !== password2) {
-      console.log("Los passwords no son iguales");
+      setAlerta({ msg: "Los passwords no son iguales", error: true });
       return;
     }
     if (password.length < 6) {
-      console.log("El password es muy corto, agrega mínimo 6 caracteres");
+      setAlerta({ msg: "El password es muy corto, agrega mínimo 6 caracteres", error: true });
       return;
     }
-    console.log("Todo bien, enviar formulario");
+    setAlerta(null);
   };
 
   return (
@@ -31,6 +39,8 @@ const Registrar = () => {
         </h1>
       </div>
       <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
+        {alerta && <Alerta alerta={alerta} />}
+
         <form onSubmit={handleSubmit}>
           <div className="my-5">
             <label className="uppercase text-gray-600 block text-xl font-bold" htmlFor="">
