@@ -9,7 +9,7 @@ interface AlertaProps {
 
 const Alerta: React.FC<AlertaProps> = ({ alerta }) => {
   return (
-    <div className={`${alerta.error ? "from-red-400 to-red-600" : "from-indigo-400"} bg-gradient-to-r text-center p-3 rounded-xl uppercase text-white font-bold text-sm mb-10`} role="alert">
+    <div className={`${alerta.error ? "bg-red-600" : "bg-indigo-800"} text-center p-3 rounded-xl uppercase text-white font-bold text-sm mb-10`} role="alert">
       {alerta.msg}
     </div>
   );

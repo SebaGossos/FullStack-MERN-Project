@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 import Alerta from "../components/Alerta.tsx";
 
 interface AlertaType {
@@ -14,7 +16,7 @@ const Registrar = () => {
   const [password2, setPassword2] = useState("");
   const [alerta, setAlerta] = useState<AlertaType | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if ([nombre, email, password, password2].includes("")) {
       setAlerta({ msg: "Todos los campos son obligatorios", error: true });
@@ -29,6 +31,20 @@ const Registrar = () => {
       return;
     }
     setAlerta(null);
+
+    // Crear el usuario en la API
+    try {
+      const url = "http://localhost:4000/api/veterinarios";
+      await axios.post(`${url}`, { nombre, email, password });
+      setAlerta({ msg: "Usuario creado correctamente, revisa tu email", error: false });
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.log(error.response.data);
+        setAlerta({ msg: error.response.data.msg, error: true });
+      } else {
+        setAlerta({ msg: "Ocurrió un error inesperado", error: true });
+      }
+    }
   };
 
   return (
