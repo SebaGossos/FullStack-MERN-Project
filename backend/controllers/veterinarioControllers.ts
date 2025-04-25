@@ -1,8 +1,9 @@
 import Veterinario from "../models/Veterinarian.ts";
 import generateJWT from "../helpers/generateJWT.ts";
 import generateId from "../helpers/generateID.ts";
+import emailRegistro from "../helpers/emailRegistro.ts";
 export const register = async (req, res) => {
-  const { email } = req.body;
+  const { email, nombre } = req.body;
 
   // prevent indentifed user
   const existUser = await Veterinario.findOne({ email });
@@ -15,6 +16,13 @@ export const register = async (req, res) => {
     // Save new veterinarian
     const veterinario = new Veterinario(req.body);
     const veterinarioGuardado = await veterinario.save();
+
+    // Send email to confirm account
+    emailRegistro({
+      email,
+      nombre,
+      token: veterinarioGuardado.token,
+    });
 
     res.json(veterinarioGuardado);
   } catch (error) {
@@ -39,7 +47,7 @@ export const confirm = async (req, res) => {
   try {
     userConfirm.token = undefined;
     userConfirm.confirmado = true;
-    await userConfirm.save(); 
+    await userConfirm.save();
 
     return res.json({ msg: "User Confirm Correctly" });
   } catch (error) {
