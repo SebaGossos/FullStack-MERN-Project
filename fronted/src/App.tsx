@@ -6,6 +6,7 @@ import OlvidePassword from "./pages/OlvidePassword.tsx";
 import ConfirmarCuenta from "./pages/ConfirmarCuenta.tsx";
 
 function App() {
+
   return (
     <BrowserRouter>
       <Routes>
