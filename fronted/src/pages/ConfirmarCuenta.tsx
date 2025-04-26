@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Alerta from "../components/Alerta.tsx";
+import clienteAxios from "../config/axios.tsx";
+
 const ConfirmarCuenta = () => {
   const [cuentaConfirmada, setCuentaConfirmada] = useState(false);
   const [cargando, setCargando] = useState(true);
@@ -16,21 +18,12 @@ const ConfirmarCuenta = () => {
     peticionHecha.current = true;
     const confirmarCuenta = async () => {
       try {
-        const url = `http://localhost:4000/api/veterinarios/confirmar/${token}`;
-        const respuesta = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await respuesta.json();
+        const url = `/veterinarios/confirmar/${token}`;
+        const { data } = await clienteAxios.get(url);
 
-        if (!respuesta.ok) {
-          throw new Error(data.msg || "Error en la confirmación de la cuenta");
-        }
         setCuentaConfirmada(true);
         setAlerta({ msg: data.msg });
-        console.log(data);
+
       } catch (error) {
         setAlerta({ msg: error.message, error });
         console.error("Error al confirmar la cuenta:", error);

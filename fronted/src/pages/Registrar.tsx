@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import clienteAxios from "../config/axios.tsx";
 
 import Alerta from "../components/Alerta.tsx";
 
@@ -34,16 +34,11 @@ const Registrar = () => {
 
     // Crear el usuario en la API
     try {
-      const url = `${import.meta.env.VITE_BACKEND_URL}/api/veterinarios`;
-      await axios.post(`${url}`, { nombre, email, password });
+      await clienteAxios.post("/veterinarios", { nombre, email, password });
       setAlerta({ msg: "Usuario creado correctamente, revisa tu email", error: false });
+    
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        console.log(error.response.data);
-        setAlerta({ msg: error.response.data.msg, error: true });
-      } else {
-        setAlerta({ msg: "Ocurrió un error inesperado", error: true });
-      }
+      setAlerta({ msg: error.response.data.msg, error: true });
     }
   };
 
