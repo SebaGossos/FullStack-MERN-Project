@@ -37,7 +37,7 @@ function Login() {
           <Link className="block text-center my-5 text-gray-500" to="/registrar">
             ¿No tienes una cuenta? Registrate
           </Link>
-          <Link className="block text-center my-5 text-gray-500" to="/registrar">
+          <Link className="block text-center my-5 text-gray-500" to="/olvide-password">
             Olvide Mi Password
           </Link>
         </nav>

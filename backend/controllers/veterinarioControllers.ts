@@ -2,6 +2,7 @@ import Veterinario from "../models/Veterinarian.ts";
 import generateJWT from "../helpers/generateJWT.ts";
 import generateId from "../helpers/generateID.ts";
 import emailRegistro from "../helpers/emailRegistro.ts";
+import emailOlvidePassword from "../helpers/emailOlvidePassword.ts";
 export const register = async (req, res) => {
   const { email, nombre } = req.body;
 
@@ -92,6 +93,14 @@ export const forgetPassword = async (req, res) => {
   try {
     existeVeterinario.token = generateId();
     await existeVeterinario.save();
+
+    // Send email to reset password with instructions
+    emailOlvidePassword({
+      email,
+      nombre: existeVeterinario.nombre,
+      token: existeVeterinario.token,
+    })
+    
     return res.json({ msg: "Hemos enviado un email" });
   } catch (error) {
     console.log(error);

@@ -9,7 +9,7 @@ app.use(express.json());
 
 connectDB();
 
-const dominiosPermitidos = ["http://localhost:3000"];
+const dominiosPermitidos = [process.env.FRONTEND_URL];
 const corsOptions = {
   origin: function (origin: any, callback: any) {
     if (dominiosPermitidos.indexOf(origin) !== -1 || !origin) {
