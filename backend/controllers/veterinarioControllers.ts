@@ -95,7 +95,7 @@ export const forgetPassword = async (req, res) => {
     await existeVeterinario.save();
 
     // Send email to reset password with instructions
-    emailOlvidePassword({
+    await emailOlvidePassword({
       email,
       nombre: existeVeterinario.nombre,
       token: existeVeterinario.token,
