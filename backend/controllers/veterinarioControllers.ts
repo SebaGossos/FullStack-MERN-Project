@@ -124,12 +124,12 @@ export const newPassword = async (req, res) => {
 
   const veterinario = await Veterinario.findOne({ token });
   if (!veterinario) {
-    const error = new Error("There was a mistake");
-    return res.status(400).json({ msg: error.message });
+    const { message: msg } = new Error("There was a mistake");
+    return res.status(400).json({ msg });
   }
 
   try {
-    veterinario.token = null;
+    veterinario.token = undefined;
     veterinario.password = password;
     await veterinario.save();
     res.json({ msg: "password changed successfully" });
