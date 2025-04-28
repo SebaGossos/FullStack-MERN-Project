@@ -3,6 +3,7 @@ import generateJWT from "../helpers/generateJWT.ts";
 import generateId from "../helpers/generateID.ts";
 import emailRegistro from "../helpers/emailRegistro.ts";
 import emailOlvidePassword from "../helpers/emailOlvidePassword.ts";
+
 export const register = async (req, res) => {
   const { email, nombre } = req.body;
 
@@ -58,9 +59,9 @@ export const confirm = async (req, res) => {
 
 export const authenticate = async (req, res) => {
   const { email, password: passwordForm } = req.body;
-
   // check if user exist
   const user = await Veterinario.findOne({ email });
+  
   if (!user) {
     const error = new Error("User does not exist ");
     return res.status(403).json({ msg: error.message });
@@ -71,6 +72,7 @@ export const authenticate = async (req, res) => {
     const error = new Error("User does not confirm");
     return res.status(403).json({ msg: error.message });
   }
+
   // Check user
   if (await user.checkPassword(passwordForm)) {
     res.json({ token: generateJWT(user.id) });
