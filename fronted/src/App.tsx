@@ -7,6 +7,9 @@ import NuevoPassword from "./pages/NuevoPassword.tsx";
 import ConfirmarCuenta from "./pages/ConfirmarCuenta.tsx";
 import {AuthProvider} from "./context/AuthProvider.tsx";
 
+import RutaProtegida from "./layout/RutaProtegida.tsx";
+import AdministrarPacientes from "./pages/AdministrarPacientes.tsx";
+
 function App() {
   return (
     <BrowserRouter>
@@ -19,6 +22,12 @@ function App() {
             <Route path="olvide-password/:token" element={<NuevoPassword />} />
             <Route path="confirmar/:token" element={<ConfirmarCuenta />} />
           </Route>
+
+          <Route path="/admin" element={ <RutaProtegida /> }>
+            <Route index element={<AdministrarPacientes />} />
+
+          </Route>
+          
         </Routes>
       </AuthProvider>
     </BrowserRouter>
