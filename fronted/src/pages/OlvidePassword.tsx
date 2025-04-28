@@ -14,6 +14,7 @@ const OlvidePassword = () => {
   const [email, setEmail] = useState("");
   const [alerta, setAlerta] = useState<AlertaType | null>(null);
 
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

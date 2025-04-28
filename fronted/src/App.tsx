@@ -5,7 +5,7 @@ import Registrar from "./pages/Registrar.tsx";
 import OlvidePassword from "./pages/OlvidePassword.tsx";
 import NuevoPassword from "./pages/NuevoPassword.tsx";
 import ConfirmarCuenta from "./pages/ConfirmarCuenta.tsx";
-import AuthProvider from "./context/AuthProvider.tsx";
+import {AuthProvider} from "./context/AuthProvider.tsx";
 
 function App() {
   return (
