@@ -38,7 +38,7 @@ export const profil = (req, res) => {
 
 export const confirm = async (req, res) => {
   const { token } = req.params;
-  
+
   const userConfirm = await Veterinario.findOne({ token });
 
   if (!userConfirm) {
@@ -54,7 +54,7 @@ export const confirm = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-}; 
+};
 
 export const authenticate = async (req, res) => {
   const { email, password: passwordForm } = req.body;
@@ -99,8 +99,8 @@ export const forgetPassword = async (req, res) => {
       email,
       nombre: existeVeterinario.nombre,
       token: existeVeterinario.token,
-    })
-    
+    });
+
     return res.json({ msg: "Hemos enviado un email" });
   } catch (error) {
     console.log(error);
@@ -111,8 +111,8 @@ export const checkToken = async (req, res) => {
   const { token } = req.params;
   const checkToken = await Veterinario.findOne({ token });
   if (!checkToken) {
-    const error = new Error("Invalid Token");
-    return res.status(400).json({ msg: error.message });
+    const { message: msg } = new Error("Invalid Token");
+    return res.status(400).json({ msg });
   }
   // token is valid user exist
   res.json({ msg: "Valid Token, user exist" });
@@ -121,10 +121,10 @@ export const checkToken = async (req, res) => {
 export const newPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
-  
+
   const veterinario = await Veterinario.findOne({ token });
-  if(!veterinario) {
-    const error = new Error('There was a mistake')
+  if (!veterinario) {
+    const error = new Error("There was a mistake");
     return res.status(400).json({ msg: error.message });
   }
 
@@ -132,8 +132,8 @@ export const newPassword = async (req, res) => {
     veterinario.token = null;
     veterinario.password = password;
     await veterinario.save();
-    res.json({msg: 'password changed successfully'})
+    res.json({ msg: "password changed successfully" });
   } catch (error) {
-    console.log(error )
+    console.log(error);
   }
 };
