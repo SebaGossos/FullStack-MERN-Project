@@ -34,7 +34,7 @@ export const register = async (req, res) => {
 
 export const profil = (req, res) => {
   const { veterinario } = req;
-  res.json({ profil: veterinario });
+  res.json( veterinario );
 };
 
 export const confirm = async (req, res) => {
