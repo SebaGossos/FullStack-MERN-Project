@@ -8,32 +8,40 @@ interface AuthProviderProps {
 const AuthContext = createContext({});
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [cargando, setCargando] = useState(true);
   const [auth, setAuth] = useState({});
+
 
   useEffect(() => {
     const autenticarUsuario = async () => {
       const token = localStorage.getItem("token");
-      if (!token) return;
-
+      
+      if (!token) {
+        setCargando(false);
+        return;
+      }
+      
       const config = {
         headers: {
           "Content-Type": `application/json`,
           Authorization: `Bearer ${token}`,
         },
       };
-
+      
       try {
         const { data } = await clienteAxios.get("/veterinarios/perfil", config);
-        setAuth( data);
+        setAuth(data);
+
+        setCargando(false);
       } catch (error) {
         console.log(error.response.data.msg);
         setAuth({});
       }
     };
     autenticarUsuario();
-  }, []);
+  }, [cargando]);
 
-  return <AuthContext.Provider value={{ auth, setAuth }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ auth, setAuth, cargando, setCargando }}>{children}</AuthContext.Provider>;
 };
 export { AuthProvider };
 export default AuthContext;
