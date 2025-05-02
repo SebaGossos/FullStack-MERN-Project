@@ -41,7 +41,12 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     autenticarUsuario();
   }, [cargando]);
 
-  return <AuthContext.Provider value={{ auth, setAuth, cargando, setCargando }}>{children}</AuthContext.Provider>;
+  const cerrarSesion = () => {
+    localStorage.removeItem("token");
+    setAuth({});
+  }
+
+  return <AuthContext.Provider value={{ auth, setAuth, cargando, setCargando, cerrarSesion }}>{children}</AuthContext.Provider>;
 };
 export { AuthProvider };
 export default AuthContext;
