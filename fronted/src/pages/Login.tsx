@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Alerta from "../components/Alerta.tsx";
 import clienteAxios from "../config/axios.tsx";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../hooks/useAuth.tsx";
 
 function Login() {
   const [alerta, setAlerta] = useState({ msg: "", error: false });
@@ -10,7 +10,8 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-  const { setCargando } = useAuth();
+
+  const { setAuth } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,8 +23,8 @@ function Login() {
 
     try {
       const { data } = await clienteAxios.post("/veterinarios/login", { email, password });
+      setAuth(data);
       localStorage.setItem("token", data.token);
-      setCargando(true);
       navigate("/admin");
     } catch (error) {
       setAlerta({ msg: error.response.data.msg, error: true });

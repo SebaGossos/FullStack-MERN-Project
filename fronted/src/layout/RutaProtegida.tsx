@@ -6,7 +6,6 @@ import Footer from "../components/Footer.tsx";
 
 function RutaProtegida() {
   const { auth, cargando } = useAuth();
-  console.log( auth, cargando );
 
   if( cargando ) return "Cargando...";
 

@@ -27,26 +27,25 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      
       try {
         const { data } = await clienteAxios.get("/veterinarios/perfil", config);
         setAuth(data);
 
-        setCargando(false);
       } catch (error) {
         console.log(error.response.data.msg);
         setAuth({});
       }
+      setCargando(false);
     };
     autenticarUsuario();
-  }, [cargando]);
+  }, []);
 
   const cerrarSesion = () => {
     localStorage.removeItem("token");
     setAuth({});
   }
 
-  return <AuthContext.Provider value={{ auth, setAuth, cargando, setCargando, cerrarSesion }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ auth, setAuth, cargando, cerrarSesion }}>{children}</AuthContext.Provider>;
 };
 export { AuthProvider };
 export default AuthContext;
