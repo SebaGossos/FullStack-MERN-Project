@@ -5,7 +5,7 @@ const PacientesContext = createContext({});
 
 export const PacientesProvider = ({ children }) => {
   const [pacientes, setPacientes] = useState([]);
-  const [paceinte, setPaciente ] = useState({})
+  const [paciente, setPaciente ] = useState({})
   useEffect(() => {
     const obtenerPacientes = async () => {
       try {
@@ -19,7 +19,10 @@ export const PacientesProvider = ({ children }) => {
         };
 
         const { data } = await clienteAxios("/pacientes", config);
-        setPacientes( data )
+        // filtrar los datos que no se necesitan
+        
+        const filtrado = data.map(({createdAt, updatedAt, __v, ...pacienteAlmacenado}) => pacienteAlmacenado);
+        setPacientes(filtrado);
       } catch (error) {
         console.log(error);
       }
@@ -28,6 +31,13 @@ export const PacientesProvider = ({ children }) => {
   }, []);
 
   const guardarPaciente = async (paciente) => {
+
+    if (paciente.id) {
+      console.log('actualizando paciente...')
+    } else {
+      console.log('creando paciente...')
+    }
+
     try {
       const token = localStorage.getItem("token");
       const config = {
@@ -54,6 +64,7 @@ export const PacientesProvider = ({ children }) => {
         pacientes,
         guardarPaciente,
         setEdicion,
+        paciente,
       }}
     >
       {children}
