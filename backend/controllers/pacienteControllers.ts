@@ -11,7 +11,8 @@ export const addPaciente = async (req, res) => {
     const savedPaciente = await paciente.save();
     return res.json(savedPaciente);
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
+    res.status(500).json({ msg: error.message });
   }
 };
 
