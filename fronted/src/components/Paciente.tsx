@@ -7,7 +7,7 @@ const Paciente = ({ paciente }) => {
     return new Intl.DateTimeFormat("es-mx", { dateStyle: "long" }).format(nuevaFecha);
   };
 
-  const { setEdicion } = usePacientes();
+  const { setEdicion, eliminarPaciente } = usePacientes();
 
   return (
     <div className="mx-5 my-10 bg-white shadow-md px-5 py-10 rounded-xl">
@@ -41,7 +41,7 @@ const Paciente = ({ paciente }) => {
           Editar
         </button>
 
-        <button type="button" className="py-2 px-2 bg-red-600 hover:bg-red-700 text-white uppercase font-bold rounded-lg">
+        <button type="button" className="py-2 px-2 bg-red-600 hover:bg-red-700 text-white uppercase font-bold rounded-lg" onClick={() => eliminarPaciente(_id)}>
           Eliminar
         </button>
       </div>
