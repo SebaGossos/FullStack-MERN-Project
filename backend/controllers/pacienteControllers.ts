@@ -57,6 +57,7 @@ export const udpatePaciente = async (req, res) => {
     res.json( updatedPacient )
   } catch (error) {
     console.log(error)
+    res.status(500).json({ msg: error.message })
   }
 
 };

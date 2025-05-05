@@ -15,14 +15,13 @@ function Formulario() {
   const { guardarPaciente, paciente } = usePacientes();
 
   useEffect(() => {
-
     if (paciente?.nombre) {
       setNombre(paciente.nombre);
       setPropietario(paciente.propietario);
       setEmail(paciente.email);
       setFecha(paciente.fecha?.split("T")[0]);
       setSintomas(paciente.sintomas);
-      setId(paciente._id)
+      setId(paciente._id);
     }
   }, [paciente]);
 
@@ -37,8 +36,14 @@ function Formulario() {
       });
       return;
     }
-    setAlerta({});
     guardarPaciente({ nombre, propietario, email, fecha, sintomas, id });
+    setAlerta({
+      msg: "Guardado Correctamente",
+      error: false,
+    });
+    // Limpiar formulario de manera más corta
+    [setNombre, setPropietario, setEmail, setFecha, setSintomas].forEach(fn => fn(''));
+    setId(null);
   };
 
   const { msg } = alerta;
@@ -86,7 +91,7 @@ function Formulario() {
           <textarea id="sintomas" placeholder="Describe los sintomas" className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md" value={sintomas} onChange={(e) => setSintomas(e.target.value)} />
         </div>
 
-        <input type="submit" className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors" value={id ? 'Guardar Cambio' : 'Agregar Paciente'} />
+        <input type="submit" className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors" value={id ? "Guardar Cambio" : "Agregar Paciente"} />
       </form>
       {msg && <Alerta alerta={alerta} />}
     </>
