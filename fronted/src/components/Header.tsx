@@ -15,7 +15,7 @@ function Header() {
         </h1>
         <nav className="flex gap-4 flex-col items-center lg:flex-row mt-5 lg:mt-0">
           <Link to='/admin' className="text-white text-sm uppercase font-bold">Pacientes</Link>
-          <Link to='/perfil' className="text-white text-sm uppercase font-bold">Perfil</Link>
+          <Link to='/admin/perfil' className="text-white text-sm uppercase font-bold">Perfil</Link>
 
           <button type="button" className="text-white text-sm uppercase font-bold" onClick={cerrarSesion} >
             Cerrar Sesion
