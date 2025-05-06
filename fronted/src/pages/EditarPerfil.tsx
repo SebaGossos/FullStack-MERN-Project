@@ -1,5 +1,50 @@
+import { useEffect, useState } from "react";
 import AdminNav from "../components/AdminNav.tsx";
+import useAuth from "../hooks/useAuth.tsx";
+import Alerta from "../components/Alerta.tsx";
+
 const EditarPerfil = () => {
+  const { auth, setAuth, actualizarPerfil } = useAuth();
+  const [perfil, setPerfil] = useState({});
+  const [alerta, setAlerta] = useState({});
+
+  useEffect(() => {
+    if (auth.nombre) {
+      setPerfil(auth);
+    }
+  }, [auth]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { nombre, email } = perfil;
+
+    if ([nombre, email].includes("")) {
+      console.log(33)
+      setAlerta({
+        msg: "Email y Nombre son obligatorios",
+        error: true,
+      });
+      return;
+    }
+    actualizarPerfil( perfil )
+
+    // try {
+    //   const token = localStorage.getItem("token");
+    //   const config = {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   };
+    //   const { data } = await clienteAxios.put("/veterinarios/perfil", perfil, config);
+    //   setAuth(data);
+    // } catch (error) {
+    //   console.log(error.response.data.msg);
+    // }
+  };
+
+  const { msg } = alerta;
+
   return (
     <>
       <AdminNav />
@@ -11,27 +56,73 @@ const EditarPerfil = () => {
 
       <div className="flex justify-center">
         <div className="w-full md:w-1/2 bg-white shadow rounded-lg p-5">
-          <form action="">
+          {msg && <Alerta alerta={alerta} />}
+        
+          <form onSubmit={handleSubmit}>
             <div className="my-3">
               <label className="uppercase font-bold text-gray-600">Nombre</label>
-              <input type="text" className="border bg-gray-50 w-full p-2 mt-5 rounded-lg" name="nombre" />
+              <input
+                type="text"
+                className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
+                name="nombre"
+                value={perfil.nombre || ""}
+                onChange={(e) =>
+                  setPerfil({
+                    ...perfil,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
             </div>
 
             <div className="my-3">
               <label className="uppercase font-bold text-gray-600">Sitio Web</label>
-              <input type="text" className="border bg-gray-50 w-full p-2 mt-5 rounded-lg" name="web" />
+              <input
+                type="text"
+                className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
+                name="web"
+                value={perfil.web || ""}
+                onChange={(e) =>
+                  setPerfil({
+                    ...perfil,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
             </div>
 
             <div className="my-3">
               <label className="uppercase font-bold text-gray-600">Teléfono</label>
-              <input type="text" className="border bg-gray-50 w-full p-2 mt-5 rounded-lg" name="telefono" />
+              <input
+                type="text"
+                className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
+                name="telefono"
+                value={perfil.telefono || ""}
+                onChange={(e) =>
+                  setPerfil({
+                    ...perfil,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
             </div>
 
             <div className="my-3">
               <label className="uppercase font-bold text-gray-600">Email</label>
-              <input type="text" className="border bg-gray-50 w-full p-2 mt-5 rounded-lg" name="email" />
+              <input
+                type="text"
+                className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
+                name="email"
+                value={perfil.email || ""}
+                onChange={(e) =>
+                  setPerfil({
+                    ...perfil,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
             </div>
-            <input type="submit" value='Guardar Cambios' className="bg-indigo-700 px-10 py-3 font-bold text-white rounded-lg uppercase w-full mt-5"/>
+            <input type="submit" value="Guardar Cambios" className="bg-indigo-700 px-10 py-3 font-bold text-white rounded-lg uppercase w-full mt-5" />
           </form>
         </div>
       </div>

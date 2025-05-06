@@ -45,7 +45,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     setAuth({});
   }
 
-  return <AuthContext.Provider value={{ auth, setAuth, cargando, cerrarSesion }}>{children}</AuthContext.Provider>;
+  const actualizarPerfil = perfil => {
+    console.log(perfil)
+  }
+
+  return <AuthContext.Provider value={{ auth, setAuth, cargando, cerrarSesion, actualizarPerfil }}>{children}</AuthContext.Provider>;
 };
 export { AuthProvider };
 export default AuthContext;
