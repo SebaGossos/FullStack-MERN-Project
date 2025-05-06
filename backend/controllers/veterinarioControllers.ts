@@ -139,3 +139,8 @@ export const newPassword = async (req, res) => {
     console.log(error);
   }
 };
+
+export const updateProfile = async (req, res ) => {
+  console.log(req.params.id)
+  console.log( req.body )
+}
