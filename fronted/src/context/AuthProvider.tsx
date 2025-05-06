@@ -29,19 +29,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     const autenticarUsuario = async () => {
-      // const token = localStorage.getItem("token");
-      
-      // if (!token) {
-      //   setCargando(false);
-      //   return;
-      // }
-      
-      // const config = {
-      //   headers: {
-      //     "Content-Type": `application/json`,
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // };
+
       const config = getAuthConfig();
       if (!config) return;
 
@@ -64,17 +52,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   }
 
   const actualizarPerfil = async perfil => {
-    // const token = localStorage.getItem("token");
-    // if (!token) {
-    //   setCargando(false);
-    //   return;
-    // }
-    // const config = {
-    //   headers: {
-    //     "Content-Type": `application/json`,
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // };
+
     const config = getAuthConfig();
     if (!config) return;
 
@@ -91,9 +69,14 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       }
     }
     
+
   }
 
-  return <AuthContext.Provider value={{ auth, setAuth, cargando, cerrarSesion, actualizarPerfil, getAuthConfig }}>{children}</AuthContext.Provider>;
+  const guardarPassword = async password => {
+    console.log( password )
+  }
+
+  return <AuthContext.Provider value={{ auth, setAuth, cargando, cerrarSesion, actualizarPerfil, guardarPassword,  getAuthConfig }}>{children}</AuthContext.Provider>;
 };
 export { AuthProvider };
 export default AuthContext;

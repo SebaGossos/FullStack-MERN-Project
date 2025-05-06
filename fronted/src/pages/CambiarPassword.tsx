@@ -5,16 +5,39 @@ import Alerta from "../components/Alerta.tsx";
 
 const CambiarPassword = () => {
 
-  const { auth, setAuth, actualizarPerfil } = useAuth();
+  const { guardarPassword } = useAuth();
 
   const [alerta, setAlerta] = useState({});
+  const [password, setPassword ] = useState({
+    pwd_actual: '',
+    pwd_nuevo: ''
+  })
   
   const handleSubmit = async e => {
+    e.preventDefault()
 
+    setTimeout(() => setAlerta({}), 3000)
+
+    if( Object.values( password ).some(campo => campo === '')) {
+      setAlerta({
+        msg: 'Todos los campos son obligatorios',
+        error: true
+      })
+      return;
+    }
+    
+    if( password.pwd_nuevo.length < 6) {
+      setAlerta({
+        msg: 'El password debe tener como mínimo 6 caracteres',
+        error: true
+      })
+      return;
+    }
+
+    guardarPassword( password )
   }
 
   const { msg } = alerta;
-  
   return (
     <>
       <AdminNav />
@@ -32,20 +55,28 @@ const CambiarPassword = () => {
             <div className="my-3">
               <label className="uppercase font-bold text-gray-600">Password Actual</label>
               <input
-                type="text"
+                type="password"
                 className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
-                name="password"
+                name="pwd_actual"
                 placeholder="Escribe tu Nuevo Password"
+                onChange={ e => setPassword({
+                  ...password,
+                  [e.target.name] : e.target.value
+                })}
               />
             </div>
 
             <div className="my-3">
               <label className="uppercase font-bold text-gray-600">Password Nuevo</label>
               <input
-                type="text"
+                type="password"
                 className="border bg-gray-50 w-full p-2 mt-5 rounded-lg"
-                name="password"
+                name="pwd_nuevo"
                 placeholder="Escribe tu Password Actual"
+                onChange={ e => setPassword({
+                  ...password,
+                  [e.target.name] : e.target.value
+                })}
               />
             </div>
 
