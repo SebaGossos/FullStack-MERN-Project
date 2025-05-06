@@ -5,6 +5,7 @@ import Alerta from "../components/Alerta.tsx";
 
 const EditarPerfil = () => {
   const { auth, setAuth, actualizarPerfil } = useAuth();
+
   const [perfil, setPerfil] = useState({});
   const [alerta, setAlerta] = useState({});
 
@@ -26,21 +27,9 @@ const EditarPerfil = () => {
       });
       return;
     }
-    actualizarPerfil( perfil )
-
-    // try {
-    //   const token = localStorage.getItem("token");
-    //   const config = {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   };
-    //   const { data } = await clienteAxios.put("/veterinarios/perfil", perfil, config);
-    //   setAuth(data);
-    // } catch (error) {
-    //   console.log(error.response.data.msg);
-    // }
+    const result = await actualizarPerfil( perfil )
+    setAlerta(result);
+    setTimeout(() => setAlerta({}), 3000)
   };
 
   const { msg } = alerta;

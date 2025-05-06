@@ -141,6 +141,29 @@ export const newPassword = async (req, res) => {
 };
 
 export const updateProfile = async (req, res ) => {
-  console.log(req.params.id)
-  console.log( req.body )
+  const veterinario = await Veterinario.findById(req.params.id);
+  if (!veterinario) {
+    const error = new Error("User not found");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  const { email } = req.body;
+  if (veterinario.email !== req.body.email) {
+    const existEmail = await Veterinario.findOne({ email });
+    if (existEmail) {
+      const error = new Error("This email is already in use");
+      return res.status(400).json({ msg: error.message });
+    }
+  }
+
+  try {
+    veterinario.nombre = req.body.nombre;
+    veterinario.email = req.body.email || veterinario.email;
+    veterinario.web = req.body.web;
+    veterinario.telefono = req.body.telefono;
+    const veterinarioUpdated = await veterinario.save();
+    res.json(veterinarioUpdated);
+  } catch (error) {
+    console.log(error);
+  }
 }

@@ -81,8 +81,14 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const { data } = await clienteAxios.put(`/veterinarios/perfil/${ perfil._id }`, perfil, config);
       setAuth(data);
+      return {
+        msg: "Guardado Correctamente"
+      }
     } catch (error) {
-      console.log(error.response);
+      return {
+        msg: error.response.data.msg,
+        error: true,
+      }
     }
     
   }
