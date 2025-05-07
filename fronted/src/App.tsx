@@ -23,8 +23,8 @@ import { PacientesProvider } from "./context/PacientesProvider.tsx";
 function App() {
   return (
     <BrowserRouter>
-      <PacientesProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <PacientesProvider>
           <Routes>
             // Rutas Publicas
             <Route path="/" element={<AuthLayout />}>
@@ -41,8 +41,8 @@ function App() {
               <Route path="cambiar-password" element={<CambiarPassword />} />
             </Route>
           </Routes>
-        </AuthProvider>
-      </PacientesProvider>
+        </PacientesProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

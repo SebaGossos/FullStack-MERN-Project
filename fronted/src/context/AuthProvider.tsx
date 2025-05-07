@@ -26,7 +26,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       },
     };
   };
-
+  console.log( auth, 33)
   useEffect(() => {
     const autenticarUsuario = async () => {
       const config = getAuthConfig();
@@ -73,7 +73,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
     try {
       const { data } = await clienteAxios.put("/veterinarios/actualizar-password", password, config);
-      console.log(data);
       return {
         msg: data.msg
       }
