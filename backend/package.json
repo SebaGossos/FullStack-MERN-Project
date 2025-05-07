@@ -10,6 +10,7 @@
   },
   "private": true,
   "scripts": {
+    "start": "bun dist/index.js",
     "dev": "index.ts"
   },
   "type": "module",
