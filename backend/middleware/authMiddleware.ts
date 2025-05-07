@@ -8,7 +8,6 @@ const checkAuth = async (req, res, next) => {
   if (tokenWithBearer && tokenWithBearer.startsWith("Bearer")) {
     try {
       token = tokenWithBearer.split(" ")[1];
-      console.log(token)
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 

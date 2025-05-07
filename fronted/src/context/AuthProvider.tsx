@@ -70,12 +70,18 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const guardarPassword = async (password) => {
     const config = getAuthConfig();
     if (!config) return;
-    console.log( config )
+
     try {
       const { data } = await clienteAxios.put("/veterinarios/actualizar-password", password, config);
       console.log(data);
+      return {
+        msg: data.msg
+      }
     } catch (error) {
-      console.log(error.response.data.msg);
+      return {
+        msg: error.response.data.msg,
+        error: true
+      }
     }
   };
 

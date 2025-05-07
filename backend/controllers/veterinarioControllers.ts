@@ -34,7 +34,7 @@ export const register = async (req, res) => {
 
 export const profil = (req, res) => {
   const { veterinario } = req;
-  res.json( veterinario );
+  res.json(veterinario);
 };
 
 export const confirm = async (req, res) => {
@@ -61,7 +61,7 @@ export const authenticate = async (req, res) => {
   const { email, password: passwordForm } = req.body;
   // check if user exist
   const user = await Veterinario.findOne({ email });
-  
+
   if (!user) {
     const error = new Error("User does not exist ");
     return res.status(403).json({ msg: error.message });
@@ -140,7 +140,7 @@ export const newPassword = async (req, res) => {
   }
 };
 
-export const updateProfile = async (req, res ) => {
+export const updateProfile = async (req, res) => {
   const veterinario = await Veterinario.findById(req.params.id);
   if (!veterinario) {
     const error = new Error("User not found");
@@ -166,9 +166,29 @@ export const updateProfile = async (req, res ) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const updatePassword = async (req, res) => {
-  console.log(req.veterinario)
-  console.log(req.body)
-}
+  // leer datos
+  const { id } = req.veterinario;
+  const { pwd_actual, pwd_nuevo } = req.body;
+
+  // comprobar que el veterinario exista
+  const veterinario = await Veterinario.findById(id);
+  if (!veterinario) {
+    const error = new Error("User not found");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  // comprobar su password
+  const isCorrectPassword = await veterinario.checkPassword(pwd_actual);
+  if (!isCorrectPassword) {
+    const error = new Error("El password actual es incorrecto");
+    return res.status(404).json({ msg: error.message });
+  }
+  veterinario.password = pwd_nuevo;
+  await veterinario.save();
+  res.json({msg: 'Password almacenado correcatmente'})
+
+  // almacenar el nuevo password
+};
