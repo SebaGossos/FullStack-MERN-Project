@@ -13,30 +13,28 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const getAuthConfig = () => {
     const token = localStorage.getItem("token");
-      
+
     if (!token) {
       setCargando(false);
       return false;
     }
-    
+
     return {
       headers: {
         "Content-Type": `application/json`,
         Authorization: `Bearer ${token}`,
       },
     };
-  }
+  };
 
   useEffect(() => {
     const autenticarUsuario = async () => {
-
       const config = getAuthConfig();
       if (!config) return;
 
       try {
         const { data } = await clienteAxios.get("/veterinarios/perfil", config);
         setAuth(data);
-
       } catch (error) {
         console.log(error.response.data.msg);
         setAuth({});
@@ -49,34 +47,39 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const cerrarSesion = () => {
     localStorage.removeItem("token");
     setAuth({});
-  }
+  };
 
-  const actualizarPerfil = async perfil => {
-
+  const actualizarPerfil = async (perfil) => {
     const config = getAuthConfig();
     if (!config) return;
 
     try {
-      const { data } = await clienteAxios.put(`/veterinarios/perfil/${ perfil._id }`, perfil, config);
+      const { data } = await clienteAxios.put(`/veterinarios/perfil/${perfil._id}`, perfil, config);
       setAuth(data);
       return {
-        msg: "Guardado Correctamente"
-      }
+        msg: "Guardado Correctamente",
+      };
     } catch (error) {
       return {
         msg: error.response.data.msg,
         error: true,
-      }
+      };
     }
-    
+  };
 
-  }
+  const guardarPassword = async (password) => {
+    const config = getAuthConfig();
+    if (!config) return;
+    console.log( config )
+    try {
+      const { data } = await clienteAxios.put("/veterinarios/actualizar-password", password, config);
+      console.log(data);
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
+  };
 
-  const guardarPassword = async password => {
-    console.log( password )
-  }
-
-  return <AuthContext.Provider value={{ auth, setAuth, cargando, cerrarSesion, actualizarPerfil, guardarPassword,  getAuthConfig }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ auth, setAuth, cargando, cerrarSesion, actualizarPerfil, guardarPassword, getAuthConfig }}>{children}</AuthContext.Provider>;
 };
 export { AuthProvider };
 export default AuthContext;

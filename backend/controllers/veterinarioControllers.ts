@@ -167,3 +167,8 @@ export const updateProfile = async (req, res ) => {
     console.log(error);
   }
 }
+
+export const updatePassword = async (req, res) => {
+  console.log(req.veterinario)
+  console.log(req.body)
+}

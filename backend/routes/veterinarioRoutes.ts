@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import { authenticate, confirm, profil, register, forgetPassword, checkToken, newPassword, updateProfile } from "../controllers/veterinarioControllers.ts";
+import { authenticate, confirm, profil, register, forgetPassword, checkToken, newPassword, updateProfile, updatePassword } from "../controllers/veterinarioControllers.ts";
 
 import checkAuth from "../middleware/authMiddleware.ts";
 
@@ -15,5 +15,6 @@ router.route("/olvide-password/:token").get(checkToken).post(newPassword);
 // private area
 router.get("/perfil", checkAuth, profil);
 router.put("/perfil/:id", checkAuth, updateProfile);
+router.put("/actualizar-password", checkAuth, updatePassword);
 
 export default router;
