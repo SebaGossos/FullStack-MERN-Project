@@ -57,7 +57,3 @@ Puedes iniciar sesión con el siguiente usuario de prueba:
 - Login y recuperación de contraseña
 - Gestión de pacientes (crear, editar, eliminar)
 - Edición de perfil y cambio de contraseña
-
----
-
-¡Listo! Ahora puedes probar la aplicación con el usuario de prueba proporcionado.
