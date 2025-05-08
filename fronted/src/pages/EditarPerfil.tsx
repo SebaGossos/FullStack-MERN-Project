@@ -2,12 +2,20 @@ import { useEffect, useState } from "react";
 import AdminNav from "../components/AdminNav.tsx";
 import useAuth from "../hooks/useAuth.tsx";
 import Alerta from "../components/Alerta.tsx";
+import type { Alert, Perfil } from "../types.ts";
 
 const EditarPerfil = () => {
-  const { auth, setAuth, actualizarPerfil } = useAuth();
+  const { auth, actualizarPerfil } = useAuth();
 
-  const [perfil, setPerfil] = useState({});
-  const [alerta, setAlerta] = useState({});
+
+  
+  const [perfil, setPerfil] = useState<Perfil>({
+    nombre: "",
+    email: "",
+    web: "",
+    telefono: "",
+  });
+  const [alerta, setAlerta] = useState<Alert | null>(null);
 
   useEffect(() => {
     if (auth.nombre) {
@@ -29,10 +37,10 @@ const EditarPerfil = () => {
     }
     const result = await actualizarPerfil( perfil )
     setAlerta(result);
-    setTimeout(() => setAlerta({}), 3000)
+    setTimeout(() => setAlerta(null), 3000)
   };
 
-  const { msg } = alerta;
+  const msg = alerta?.msg;
 
   return (
     <>

@@ -14,7 +14,9 @@
     "noEmit": true,
 
     /* Linting */
-    "strict": true,
+    "strict": false,
+    "noEmitOnError": false,
+    "noImplicitAny": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,

@@ -1,13 +1,14 @@
 import { createContext, useEffect, useState } from "react";
 import clienteAxios from "../config/axios";
 import useAuth from "../hooks/useAuth";
+import type { PacientesContextType, Pacient } from "../types.ts";
 
-const PacientesContext = createContext({});
+// const PacientesContext = createContext({});
+const PacientesContext = createContext<PacientesContextType>({} as PacientesContextType);
 
 export const PacientesProvider = ({ children }) => {
-
-  const [pacientes, setPacientes] = useState([]);
-  const [paciente, setPaciente] = useState({});
+  const [pacientes, setPacientes] = useState<Pacient[]>([]);
+  const [paciente, setPaciente] = useState<Pacient>({ nombre: "", propietario: "", email: "", fecha: "", sintomas: "" });
 
   const { auth } = useAuth();
 
@@ -26,7 +27,10 @@ export const PacientesProvider = ({ children }) => {
         const { data } = await clienteAxios("/pacientes", config);
         // filtrar los datos que no se necesitan
 
-        const filtrado = data.map(({ createdAt, updatedAt, __v, ...pacienteAlmacenado }) => pacienteAlmacenado);
+        const filtrado = data.map(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          ({ createdAt, updatedAt, __v, ...pacienteAlmacenado }) => pacienteAlmacenado
+        );
         setPacientes(filtrado);
       } catch (error) {
         console.log(error);
@@ -36,7 +40,6 @@ export const PacientesProvider = ({ children }) => {
   }, [auth]);
 
   const guardarPaciente = async (paciente) => {
-    
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -50,14 +53,24 @@ export const PacientesProvider = ({ children }) => {
         const { data } = await clienteAxios.put(`/pacientes/${paciente.id}`, paciente, config);
         const pacientesActualizadors = pacientes.map((pacienteState) => (pacienteState._id === data._id ? data : pacienteState));
         setPacientes(pacientesActualizadors);
-        setPaciente({});
+        setPaciente({
+          nombre: "",
+          propietario: "",
+          email: "",
+          fecha: "",
+          sintomas: "",
+          _id: undefined,
+          id: undefined
+        });
       } catch (error) {
         console.log(error.response.data.msg);
       }
     } else {
       try {
         const { data } = await clienteAxios.post("/pacientes", paciente, config);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { createdAt, updatedAt, __v, ...pacienteAlmacenado } = data;
+        
         setPacientes([pacienteAlmacenado, ...pacientes]);
       } catch (error) {
         console.log(error.response.data.msg);
@@ -70,8 +83,8 @@ export const PacientesProvider = ({ children }) => {
   };
 
   const eliminarPaciente = async (id) => {
-    const confirmar = confirm('¿Confirmas que deseas eliminar?')
-    if(confirmar) {
+    const confirmar = confirm("¿Confirmas que deseas eliminar?");
+    if (confirmar) {
       try {
         const token = localStorage.getItem("token");
         const config = {
@@ -80,16 +93,14 @@ export const PacientesProvider = ({ children }) => {
             Authorization: `Bearer ${token}`,
           },
         };
-        const { data } = await clienteAxios.delete(`/pacientes/${id}`, config);
+        await clienteAxios.delete(`/pacientes/${id}`, config);
         const pacientesActualizados = pacientes.filter((pacienteState) => pacienteState._id !== id);
-        setPacientes( pacientesActualizados );
+        setPacientes(pacientesActualizados);
       } catch (error) {
         console.log(error.response.data.msg);
-        
       }
     }
-    
-  }
+  };
 
   return (
     <PacientesContext.Provider
@@ -98,7 +109,7 @@ export const PacientesProvider = ({ children }) => {
         guardarPaciente,
         setEdicion,
         paciente,
-        eliminarPaciente
+        eliminarPaciente,
       }}
     >
       {children}

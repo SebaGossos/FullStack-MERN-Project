@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Alerta from "../components/Alerta.tsx";
 import clienteAxios from "../config/axios.tsx";
+import type { Alert } from "../types.ts";
 
 const ConfirmarCuenta = () => {
   const [cuentaConfirmada, setCuentaConfirmada] = useState(false);
   const [cargando, setCargando] = useState(true);
-  const [alerta, setAlerta] = useState({});
+  const [alerta, setAlerta] = useState<Alert>({} as Alert);
 
   const { token } = useParams();
 

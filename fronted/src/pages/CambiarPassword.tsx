@@ -2,11 +2,13 @@ import { useState } from "react";
 import AdminNav from "../components/AdminNav.tsx";
 import useAuth from "../hooks/useAuth.tsx";
 import Alerta from "../components/Alerta.tsx";
+import type { Alert } from "../types.ts";
 
 const CambiarPassword = () => {
   const { guardarPassword } = useAuth();
 
-  const [alerta, setAlerta] = useState({});
+  // const [alerta, setAlerta] = useState({});
+  const [alerta, setAlerta] = useState<Alert | null>(null);
   const [password, setPassword] = useState({
     pwd_actual: "",
     pwd_nuevo: "",
@@ -15,7 +17,7 @@ const CambiarPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setTimeout(() => setAlerta({}), 5000);
+    setTimeout(() => setAlerta(null), 5000);
 
     if (Object.values(password).some((campo) => campo === "")) {
       setAlerta({
@@ -45,7 +47,7 @@ const CambiarPassword = () => {
     setAlerta(respuesta);
   };
 
-  const { msg } = alerta;
+  const msg = alerta?.msg;
   return (
     <>
       <AdminNav />

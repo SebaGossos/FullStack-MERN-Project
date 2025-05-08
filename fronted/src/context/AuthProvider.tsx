@@ -1,11 +1,13 @@
 import { useState, useEffect, createContext } from "react";
 import clienteAxios from "../config/axios.tsx";
+import type { AuthContextType } from "../types.ts";
 
 interface AuthProviderProps {
   children: React.ReactNode;
 } // Define el tipo de props que espera el AuthProvider
 
-const AuthContext = createContext({});
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [cargando, setCargando] = useState(true);
@@ -26,7 +28,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       },
     };
   };
-  console.log( auth, 33)
   useEffect(() => {
     const autenticarUsuario = async () => {
       const config = getAuthConfig();

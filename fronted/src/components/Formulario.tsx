@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Alerta from "./Alerta";
 import usePacientes from "../hooks/usePacientes";
+import type { Alert } from "../types.ts";
+
 
 function Formulario() {
   const [nombre, setNombre] = useState("");
@@ -10,9 +12,11 @@ function Formulario() {
   const [sintomas, setSintomas] = useState("");
   const [id, setId] = useState(null);
 
-  const [alerta, setAlerta] = useState({});
 
   const { guardarPaciente, paciente } = usePacientes();
+  
+
+  const [alerta, setAlerta] = useState<Alert>({ msg: "", error: false });
 
   useEffect(() => {
     if (paciente?.nombre) {
@@ -37,6 +41,7 @@ function Formulario() {
       return;
     }
     guardarPaciente({ nombre, propietario, email, fecha, sintomas, id });
+    
     setAlerta({
       msg: "Guardado Correctamente",
       error: false,

@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import Alerta from "../components/Alerta.tsx";
 import clienteAxios from "../config/axios.tsx";
 import { Link } from "react-router-dom";
+import type { Alert } from "../types.ts";
 
 function NuevoPassword() {
   const [password, setPassword] = useState("");
-  const [alerta, setAlerta] = useState({ msg: "", error: false });
+  const [alerta, setAlerta] = useState<Alert>({ msg: "", error: false });
   const [tokenValido, setTokenValido] = useState(false);
   const [passwordModificado, setPasswordModificado] = useState(false);
 
@@ -46,7 +47,7 @@ function NuevoPassword() {
         setAlerta({ msg: data.msg });
         setPasswordModificado(true);
         setTokenValido(false); // Deshabilitar el formulario después de cambiar la contraseña
-      } catch (error: any) {
+      } catch (error) {
         setAlerta({ msg: error.message, error: true });
       }
     };
