@@ -7,8 +7,11 @@ Este proyecto es una aplicación de gestión de pacientes veterinarios construid
 - **Frontend**: Aplicación React con autenticación, registro, gestión de pacientes y perfil de usuario.
 
 ## Acceso a la aplicación
-Puedes ingresar y probar la aplicación desde aquí:
+Puedes ingresar y probar la aplicación desde aquí con el siguiente usuario de prueba:
 
+- **Correo:** prueba@prueba.com
+- **Contraseña:** 123456
+- Se demora en logear por el servidor unos segundos:
 👉 [https://administrador-pacientes-w-mern.netlify.app/](https://administrador-pacientes-w-mern.netlify.app/)
 
 ## Instalación y ejecución local
@@ -45,12 +48,6 @@ npm run dev
 cd ../fronted
 npm run dev
 ```
-
-## Usuario de prueba
-Puedes iniciar sesión con el siguiente usuario de prueba:
-
-- **Correo:** prueba@prueba.com
-- **Contraseña:** 123456
 
 ## Funcionalidades principales
 - Registro y confirmación de cuenta de veterinarios
